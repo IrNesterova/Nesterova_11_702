@@ -1,23 +1,24 @@
 package ru.itis;
 
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 public class Main {
 
-    public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.addToBegin(123);
-        list.addToBegin(124);
-        list.addToBegin(125);
-        list.addToBegin(126);
-        list.add(505);
-        list.add(404);
-        list.add(127);
-        list.remove(126);
-        list.contains(505);
-        list.printList();
-        list.reverse();
-        list.printList();
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("C://Poly.txt"));
+        BufferedReader br1 = new BufferedReader(new FileReader("C://Poly1.txt"));
+        Polynomial pl = new Polynomial(br);
+        Polynomial pl1 = new Polynomial(br1);
+        System.out.println(pl1.evaluate(3));
+        System.out.println(pl.evaluate(2));
+        System.out.println(pl);
+        System.out.println(pl.derivate());
+        System.out.println(pl.deleteOdd());
+        pl.delete(3);
     }
 }
+
+
