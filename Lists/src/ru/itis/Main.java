@@ -12,12 +12,13 @@ public class Main {
         BufferedReader br1 = new BufferedReader(new FileReader("C://Poly1.txt"));
         Polynomial pl = new Polynomial(br);
         Polynomial pl1 = new Polynomial(br1);
-        System.out.println(pl1.evaluate(3));
-        System.out.println(pl.evaluate(2));
-        System.out.println(pl);
-        System.out.println(pl.derivate());
-        System.out.println(pl.deleteOdd());
-        pl.delete(3);
+        System.out.println(pl1);
+        System.out.println(pl.delete(4));
+        System.out.println(pl1.combine());
+
+
+
+
     }
 }
 

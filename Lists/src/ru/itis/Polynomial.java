@@ -92,46 +92,52 @@ public class Polynomial {
         return value;
     }
 //нужно поработать над удалением
-    /*
+
     public Polynomial deleteOdd() {
-        Polynomial del = new Polynomial();
         Node curr = poly;
-        Node ptr, save;
-        save = poly;
-        ptr = poly.next;
-        while (ptr != null) {
-            if ((ptr.term.degree/2)==1){
-            Node next = ptr.next;
-            save.next = next;
-            ptr = next;
-        } else {
-        save = ptr;
-        ptr = next;
+        Polynomial del = new Polynomial();
+        while (curr.next!=null){
+            if ((curr.term.degree % 2) == 1){
+                curr.term.degree = curr.next.term.degree;
+                poly = poly.next;
+            }
+            if ((curr.next.term.degree % 2) == 1 ){
+                curr.next.term.degree = curr.next.next.term.degree;
+                curr.next = curr.next.next;
+            }
+            curr = curr.next;
+        }
+        if ((curr.term.degree/2) == 1){
+            curr.term.degree = curr.prev.term.degree;
+            curr.term = curr.prev.term;
         }
         del.poly = poly;
         return del;
     }
 
+
     public Polynomial delete(int degree) {
         Node curr = poly;
-        Node save;
-        save = poly;
-        ptr = poly.next;
         Polynomial delOdd = new Polynomial();
-        while (ptr != null) {
-            if ((ptr.term.degree / 2) == 1) {
-                Node next = ptr.next;
-                save.next = next;
-                ptr = next;
-            } else {
-                save = ptr;
-                ptr = next;
+        while (curr.next != null) {
+            if (curr.term.degree == degree) {
+                curr.term.degree = curr.next.term.degree;
+                poly = poly.next;
             }
+            if (curr.next.term.degree == degree) {
+                curr.next.term.degree = curr.next.next.term.degree;
+                curr.next = curr.next.next;
+            }
+            curr = curr.next;
         }
+            if (curr.term.degree == degree){
+                curr.term.degree = curr.prev.term.degree;
+                curr.term = curr.prev.term;
+            }
+
         delOdd.poly = poly;
         return delOdd;
     }
-    */
 
     //работает
     public Polynomial derivate() {
@@ -145,25 +151,32 @@ public class Polynomial {
         deriv.poly = poly;
         return deriv;
     }
-
+//должно работать, проверять это я конечно не буду
     public Polynomial combine() {
         Node curr = poly;
         Node temp = null;
-        while (curr!=null){
+        while (curr.next!=null){
             if (curr.term.degree>curr.next.term.degree){
                 temp = curr;
                 curr = curr.next;
                 curr.next = temp;
+                curr = curr.next;
             }
+
             if (curr.term.degree==curr.next.term.degree){
-                if (curr.term.coeff > 0 & curr.next.term.coeff<0){
+                if (curr.term.coeff > 0 && curr.next.term.coeff<0){
                     curr.term.coeff = curr.term.coeff - curr.next.term.coeff;
-                    curr = curr.next;
+                    curr.next.term.coeff = curr.next.next.term.coeff;
+                    curr.next.term.degree = curr.next.next.term.degree;
+                    curr.next = curr.next.next;
                 } else {
                     curr.term.coeff = curr.term.coeff + curr.next.term.coeff;
-                    curr = curr.next;
+                    curr.next.term.coeff = curr.next.next.term.coeff;
+                    curr.next.term.degree = curr.next.next.term.degree;
+                    curr.next = curr.next.next;
                 }
             }
+            curr = curr.next;
         }
         Polynomial combine = new Polynomial();
         combine.poly = this.poly;
